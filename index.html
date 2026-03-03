@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSIRAO MIKIRY - Accès</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(45deg,#141e30,#243b55);
+    color:white;
+    font-family:Segoe UI;
+}
+
+#box{
+    text-align:center;
+    background:rgba(255,255,255,0.1);
+    padding:25px;
+    border-radius:20px;
+    backdrop-filter: blur(10px);
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    width:200px;
+    margin-top:10px;
+}
+
+button{
+    margin-top:10px;
+    padding:10px;
+    width:200px;
+    border:none;
+    border-radius:20px;
+    background:#00c6ff;
+    color:white;
+}
+
+#msg{margin-top:10px;}
+</style>
+</head>
+
+<body>
+
+<div id="box">
+    <h2>🔐 TSIRAO MIKIRY</h2>
+    <p>Entrez le code</p>
+    <input type="password" id="code">
+    <button onclick="go()">Ouvrir</button>
+    <p id="msg"></p>
+</div>
+
+<script>
+let secret = "4321"; // TON CODE
+
+function go(){
+    let c = document.getElementById("code").value;
+    if(c === secret){
+        window.location.href = "app.html";
+    } else {
+        document.getElementById("msg").innerText = "❌ Mauvais code";
+    }
+}
+</script>
+
+</body>
+</html>

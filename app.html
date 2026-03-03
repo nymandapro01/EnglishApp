@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENGLISH TSIRAO</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+body{
+    margin:0;
+    height:100vh;
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(180deg,#87CEEB,#E0F7FF);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.bird{
+    position:absolute;
+    top:20px;
+    left:-50px;
+    font-size:26px;
+    animation: fly 10s linear infinite;
+}
+
+.bird:nth-child(2){
+    top:60px;
+    animation-duration:12s;
+}
+
+.bird:nth-child(3){
+    top:100px;
+    animation-duration:9s;
+}
+
+@keyframes fly{
+    0%{transform:translateX(-50px);opacity:0;}
+    10%{opacity:1;}
+    50%{transform:translateX(200px) translateY(-10px);}
+    100%{transform:translateX(450px);opacity:0;}
+}
+
+.container{
+    width:95%;
+    max-width:420px;
+    padding:25px;
+    border-radius:25px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.18);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+.book-popup{
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.book{
+    font-size:60px;
+    animation: openBook 2s ease-in-out infinite;
+}
+
+@keyframes openBook{
+    0%{transform:scale(0.8);}
+    50%{transform:scale(1);}
+    100%{transform:scale(0.8);}
+}
+
+h1{
+    color:#003f7f;
+    letter-spacing:2px;
+}
+
+.card{
+    margin-top:20px;
+    padding:20px;
+    border-radius:20px;
+    background: rgba(0,0,0,0.35);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.lesson-number{
+    font-size:18px;
+    opacity:0.9;
+}
+
+.fr{
+    margin-top:15px;
+    font-size:18px;
+}
+
+.en{
+    margin-top:10px;
+    font-size:20px;
+    font-weight:bold;
+    color:#00ffe7;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 25px;
+    border:none;
+    border-radius:30px;
+    font-weight:bold;
+    cursor:pointer;
+    background: linear-gradient(90deg,#00c6ff,#0072ff);
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+input{
+    padding:8px;
+    width:90%;
+    border-radius:10px;
+    border:none;
+    margin-top:5px;
+}
+
+.result{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.level{
+    margin-top:10px;
+    font-size:16px;
+    font-weight:bold;
+    color:#003f7f;
+}
+
+footer{
+    margin-top:20px;
+    font-size:14px;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- oiseaux -->
+<div class="bird">🐦</div>
+<div class="bird">🐦</div>
+<div class="bird">🐦</div>
+
+<div class="container">
+
+    <!-- livre animé -->
+    <div class="book-popup">
+        <div class="book">📖</div>
+    </div>
+
+    <h1>ENGLISH TSIRAO</h1>
+
+    <div class="level" id="level">Niveau : A1</div>
+
+    <div class="card" id="lessonCard">
+        <div class="lesson-number" id="lessonNumber">Leçon 1</div>
+        <div class="fr" id="frText">Bonjour</div>
+        <div class="en" id="enText">Hello</div>
+
+        <button onclick="speakText()">🔊 Prononcer</button>
+        <button onclick="nextLesson()">Suivant</button>
+    </div>
+
+    <div class="card" id="testCard" style="display:none;"></div>
+
+    <footer>TSIRAO</footer>
+</div>
+
+<script>
+
+// 100 leçons
+let lessons = [
+["Bonjour / Salutation","Hello / Greeting"],
+["Je m'appelle ...","My name is ..."],
+["Comment ça va ?","How are you?"],
+["Je vais bien","I am fine"],
+["Et toi ?","And you?"],
+["Merci","Thank you"],
+["De rien","You're welcome"],
+["Bonne journée","Have a nice day"],
+["À demain","See you tomorrow"],
+["Au revoir","Goodbye"],
+
+["Je suis étudiant","I am a student"],
+["Je travaille","I work"],
+["Quel est ton métier ?","What is your job?"],
+["J'aime apprendre","I like learning"],
+["Je parle un peu anglais","I speak a little English"],
+
+["Je veux apprendre","I want to learn"],
+["C'est facile","It is easy"],
+["C'est difficile","It is difficult"],
+["Je comprends","I understand"],
+["Je ne comprends pas","I don't understand"],
+
+["Pouvez-vous répéter ?","Can you repeat?"],
+["Parlez lentement","Speak slowly"],
+["Qu'est-ce que c'est ?","What is it?"],
+["Où est-ce ?","Where is it?"],
+["Pourquoi ?","Why?"],
+
+["Quel âge as-tu ?","How old are you?"],
+["J'ai 20 ans","I am 20 years old"],
+["Je suis heureux","I am happy"],
+["Je suis fatigué","I am tired"],
+["Je suis malade","I am sick"],
+
+["Il fait beau","The weather is nice"],
+["Il pleut","It is raining"],
+["Il fait chaud","It is hot"],
+["Il fait froid","It is cold"],
+["Le soleil brille","The sun is shining"],
+
+["Je veux un café","I want a coffee"],
+["Je veux de l'eau","I want water"],
+["J'ai faim","I am hungry"],
+["J'ai soif","I am thirsty"],
+["C'est délicieux","It is delicious"],
+
+["Je vais au travail","I go to work"],
+["Je rentre à la maison","I go home"],
+["Je dors","I sleep"],
+["Je me réveille","I wake up"],
+["Je me repose","I rest"],
+
+["Je regarde la télé","I watch TV"],
+["Je lis un livre","I read a book"],
+["J'écoute de la musique","I listen to music"],
+["Je joue","I play"],
+["Je cuisine","I cook"],
+
+["Où habites-tu ?","Where do you live?"],
+["J'habite à Antananarivo","I live in Antananarivo"],
+["C'est une belle ville","It is a beautiful city"],
+["J'aime ma ville","I love my city"],
+["Je voyage","I travel"],
+
+["Je veux un travail","I want a job"],
+["Je cherche un emploi","I am looking for a job"],
+["Bonne chance","Good luck"],
+["Félicitations","Congratulations"],
+["Bravo","Well done"],
+
+["Je suis content","I am happy"],
+["Je suis triste","I am sad"],
+["Ne t'inquiète pas","Don't worry"],
+["Tout va bien","Everything is fine"],
+["Courage","Be strong"],
+
+["Je peux","I can"],
+["Je ne peux pas","I cannot"],
+["Je veux","I want"],
+["Je ne veux pas","I don't want"],
+["Peut-être","Maybe"],
+
+["C'est vrai","It is true"],
+["C'est faux","It is false"],
+["Je pense","I think"],
+["Je sais","I know"],
+["Je ne sais pas","I don't know"],
+
+["Quel est ton nom ?","What is your name?"],
+["Enchanté","Nice to meet you"],
+["Où es-tu ?","Where are you?"],
+["Je suis ici","I am here"],
+["Je suis là","I am there"],
+
+["Je veux parler anglais","I want to speak English"],
+["Je veux m'améliorer","I want to improve"],
+["Je pratique chaque jour","I practice every day"],
+["L'anglais est utile","English is useful"],
+["Merci pour l'aide","Thank you for the help"],
+
+["Je suis prêt","I am ready"],
+["Je continue","I continue"],
+["Je progresse","I progress"],
+["C'est bien","It is good"],
+["Excellent","Excellent"],
+
+["Je fais des erreurs","I make mistakes"],
+["Ce n'est pas grave","It doesn't matter"],
+["J'apprends","I learn"],
+["Je m'améliore","I improve"],
+["Je réussis","I succeed"],
+
+["Je veux parler couramment","I want to speak fluently"],
+["Je m'exerce","I practice"],
+["Je répète","I repeat"],
+["Je mémorise","I memorize"],
+["Je comprends mieux","I understand better"],
+
+["Merci beaucoup","Thank you very much"],
+["Je suis reconnaissant","I am grateful"],
+["C'est gentil","It is kind"],
+["Bonne continuation","Keep going"],
+["À bientôt","See you soon"]
+];
+
+let allLessons = [];
+for(let i=1;i<=100;i++){
+    allLessons.push(lessons[(i-1) % lessons.length]);
+}
+
+let index = 0;
+let score = 0;
+
+function nextLesson(){
+    index++;
+    if(index % 10 === 0){
+        startTest();
+        return;
+    }
+
+    let data = allLessons[index];
+    document.getElementById("lessonNumber").innerText = "Leçon " + (index+1);
+    document.getElementById("frText").innerText = data[0];
+    document.getElementById("enText").innerText = data[1];
+}
+
+function startTest(){
+    document.getElementById("lessonCard").style.display="none";
+    let testCard = document.getElementById("testCard");
+    testCard.style.display="block";
+
+    let html = "<h3>TEST (5 Questions)</h3>";
+
+    for(let i=0;i<5;i++){
+        html += `
+        <p>Traduire en anglais : <b>${allLessons[index - (index % 10) + i][0]}</b></p>
+        <input type="text" id="q${i}">
+        `;
+    }
+
+    html += `<button onclick="checkTest()">Valider</button>
+    <div class="result" id="result"></div>`;
+
+    testCard.innerHTML = html;
+}
+
+function checkTest(){
+    let correct = 0;
+
+    for(let i=0;i<5;i++){
+        let user = document.getElementById("q"+i).value.trim().toLowerCase();
+        let good = allLessons[index - (index % 10) + i][1].toLowerCase();
+
+        if(user === good){
+            correct++;
+        }
+    }
+
+    let percent = (correct/5)*100;
+    document.getElementById("result").innerHTML =
+    "Score : " + correct + "/5<br>Pourcentage : " + percent + "%";
+
+    document.getElementById("lessonCard").style.display="block";
+    document.getElementById("testCard").style.display="none";
+}
+
+function speakText(){
+    let text = document.getElementById("enText").innerText;
+    if(!text){
+        alert("Pas de texte à prononcer");
+        return;
+    }
+
+    let speech = new SpeechSynthesisUtterance();
+    speech.text = text;
+    speech.lang = "en-US";
+    speech.rate = 0.9;
+    speech.pitch = 1;
+
+    let voices = window.speechSynthesis.getVoices();
+    if(voices.length > 0){
+        speech.voice = voices.find(v => v.lang.includes("en")) || voices[0];
+    }
+
+    window.speechSynthesis.speak(speech);
+}
+
+function playSound(ok){
+    let audio = new Audio();
+    audio.src = ok
+      ? "https://www.soundjay.com/buttons/sounds/button-3.mp3"
+      : "https://www.soundjay.com/buttons/sounds/button-10.mp3";
+    audio.play();
+}
+</script>
+
+</body>
+</html>
